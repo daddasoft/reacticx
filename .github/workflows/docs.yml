@@ -2,7 +2,7 @@ name: 📖 Docs
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-deploy:
@@ -19,4 +19,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           publish_branch: gh-pages
-          commit_message: chore(docs): auto-update
+          commit_message: "chore(docs): auto-update"
