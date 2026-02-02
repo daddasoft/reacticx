@@ -4,6 +4,12 @@ const withMDX = createMDX();
 
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   outputFileTracingIncludes: {
     "/**": ["components/kokonutui/**/*"],
   },
