@@ -39,7 +39,7 @@ export function MobileNav() {
         aria-controls="mobile-menu"
         aria-expanded={open}
         aria-label="Toggle menu"
-        className="md:hidden cursor-pointer p-2 hover:bg-accent rounded-md transition-colors"
+        className="md:hidden cursor-pointer p-2 hover:bg-white/10 rounded-md transition-colors text-white"
         onClick={() => setOpen(!open)}
       >
         {open ? <XIcon className="size-5" /> : <MenuIcon className="size-5" />}
@@ -50,8 +50,8 @@ export function MobileNav() {
         createPortal(
           <div
             className={cn(
-              "bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/50",
-              "fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-t md:hidden",
+              "bg-black/95 backdrop-blur-sm supports-backdrop-filter:bg-black/50",
+              "fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-t border-white/10 md:hidden",
             )}
             id="mobile-menu"
           >
@@ -66,10 +66,7 @@ export function MobileNav() {
               <div className="grid gap-y-1">
                 {navLinks.map((link) => (
                   <Link
-                    className={buttonVariants({
-                      variant: "ghost",
-                      className: "justify-start gap-3 h-12 text-base",
-                    })}
+                    className="justify-start gap-3 h-12 text-base inline-flex items-center px-4 rounded-md text-white hover:bg-white/10 transition-colors"
                     href={link.href}
                     key={link.label}
                     onClick={handleClose}
@@ -81,19 +78,16 @@ export function MobileNav() {
               </div>
 
               {/* Divider */}
-              <div className="my-4 h-px bg-border" />
+              <div className="my-4 h-px bg-white/10" />
 
               {/* Social Links */}
               <div className="grid gap-y-1">
-                <p className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <p className="px-4 py-2 text-xs font-medium text-white/50 uppercase tracking-wider">
                   Connect
                 </p>
                 {socialLinks.map((link) => (
                   <a
-                    className={buttonVariants({
-                      variant: "ghost",
-                      className: "justify-start gap-3 h-12 text-base",
-                    })}
+                    className="justify-start gap-3 h-12 text-base inline-flex items-center px-4 rounded-md text-white hover:bg-white/10 transition-colors"
                     href={link.href}
                     key={link.label}
                     target="_blank"

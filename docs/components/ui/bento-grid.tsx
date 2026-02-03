@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import {
@@ -9,6 +10,7 @@ import {
   Palette,
   FileCode,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface BentoGridItemProps {
   title: string;
@@ -25,6 +27,8 @@ const BentoGridItem = ({
   className,
   size = "small",
 }: BentoGridItemProps) => {
+  const router = useRouter();
+
   const variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -36,6 +40,7 @@ const BentoGridItem = ({
 
   return (
     <motion.div
+      onClick={() => router.push("/why-reacticx")}
       variants={variants}
       className={cn(
         "group border-white/10 bg-neutral-950 hover:border-white/20 relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-6 pt-6 pb-10 shadow-md transition-all duration-500",

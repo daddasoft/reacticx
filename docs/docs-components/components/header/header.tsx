@@ -129,7 +129,7 @@ export function Header() {
       className={cn(
         "sticky top-0 z-50 mx-auto w-full max-w-4xl border-transparent border-b md:transition-all md:ease-out",
         scrolled &&
-          "rounded-full border-border bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/50 md:top-2 md:max-w-3xl md:shadow",
+          "rounded-full border-white/10 bg-black/95 backdrop-blur-sm supports-backdrop-filter:bg-black/50 md:top-2 md:max-w-3xl md:shadow",
       )}
     >
       <nav
@@ -139,7 +139,7 @@ export function Header() {
         )}
       >
         {/* Logo */}
-        <a className="rounded-md p-2 hover:bg-accent" href="#">
+        <a className="rounded-md p-2 hover:bg-white/10" href="/">
           <img
             src="/static/deps/white_glow.png"
             alt="React Native Skia"
@@ -162,7 +162,7 @@ export function Header() {
           ))} */}
 
           {/* Divider */}
-          <div className="mx-2 h-4 w-px bg-border" />
+          <div className="mx-2 h-4 w-px bg-white/20" />
 
           {/* Social Links */}
           {socialLinks.map((link, i) => (
@@ -172,10 +172,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               title={link.label}
-              className={cn(
-                buttonVariants({ variant: "ghost", size: "icon" }),
-                "h-9 w-9",
-              )}
+              className="h-9 w-9 inline-flex items-center justify-center rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
             >
               <link.icon className="h-4 w-4" />
               <span className="sr-only">{link.label}</span>
