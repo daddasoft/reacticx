@@ -8,6 +8,48 @@ import { PackageManagerTabs } from "./package-manager-tabs";
 
 const REGISTRY_URL = "https://reacticx-ui-components.pages.dev";
 
+// Helper function to copy text with Safari fallback
+const copyToClipboard = async (text: string): Promise<void> => {
+  // Try using the Clipboard API with ClipboardItem (works better in Safari)
+  if (navigator.clipboard && window.ClipboardItem) {
+    try {
+      const blob = new Blob([text], { type: "text/plain" });
+      const clipboardItem = new ClipboardItem({ "text/plain": blob });
+      await navigator.clipboard.write([clipboardItem]);
+      return;
+    } catch (e) {
+      // Fall through to other methods
+    }
+  }
+
+  // Try the standard writeText
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch (e) {
+      // Fall through to fallback
+    }
+  }
+
+  // Fallback for Safari and older browsers
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-999999px";
+  textArea.style.top = "-999999px";
+  textArea.style.opacity = "0";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    document.execCommand("copy");
+  } finally {
+    document.body.removeChild(textArea);
+  }
+};
+
 function SuccessParticles({
   buttonRef,
 }: {
@@ -112,8 +154,8 @@ export default function PreviewContent({
 
       const combinedCode = files.join("\n\n");
 
-      // Copy to clipboard
-      await navigator.clipboard.writeText(combinedCode);
+      // Copy to clipboard using helper with Safari fallback
+      await copyToClipboard(combinedCode);
       setIsCopied(true);
 
       setTimeout(() => {
@@ -127,25 +169,31 @@ export default function PreviewContent({
     }
   };
 
-  const handleTerminalClick = (packageManager: string) => {
-    const componentName = getFileName();
+  const handleTerminalClick = async (packageManager: string) => {
+    try {
+      const componentName = getFileName();
 
-    let commandToCopy: string;
-    const componentAddCommand = `reacticx add ${componentName}`;
+      let commandToCopy: string;
+      const componentAddCommand = `reacticx add ${componentName}`;
 
-    if (packageManager === "pnpm") {
-      commandToCopy = `pnpm dlx ${componentAddCommand}`;
-    } else if (packageManager === "npm") {
-      commandToCopy = `npx ${componentAddCommand}`;
-    } else {
-      commandToCopy = `bunx --bun ${componentAddCommand}`;
+      if (packageManager === "pnpm") {
+        commandToCopy = `pnpm dlx ${componentAddCommand}`;
+      } else if (packageManager === "npm") {
+        commandToCopy = `npx ${componentAddCommand}`;
+      } else {
+        commandToCopy = `bunx --bun ${componentAddCommand}`;
+      }
+
+      await copyToClipboard(commandToCopy);
+      setIsTerminalCopied(true);
+      setTimeout(() => {
+        setIsTerminalCopied(false);
+      }, 1000);
+    } catch (err) {
+      console.error("Terminal clipboard error:", err);
+      setError("Failed to copy command");
+      setTimeout(() => setError(null), 3000);
     }
-
-    navigator.clipboard.writeText(commandToCopy);
-    setIsTerminalCopied(true);
-    setTimeout(() => {
-      setIsTerminalCopied(false);
-    }, 1000);
   };
 
   return (

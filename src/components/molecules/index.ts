@@ -4,7 +4,7 @@ export * from "./breadcrumbs";
 export * from "./card";
 export * from "./List";
 export * from "./Loaders";
-export * from "./search-bar/children/SearchBar";
+export * from "./search-bar/SearchBar";
 export * from "./Toast";
 export * from "./Timeline/TimelineView";
 export * from "./Pagination/Pagination";
